@@ -3,3 +3,4 @@ Bin
 Bin/*
 Libs
 Libs/*
+*.o
