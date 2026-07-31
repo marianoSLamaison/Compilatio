@@ -7,18 +7,22 @@ librariFiles:= ./Libs/glfw-3.4.bin.WIN64/lib-mingw-w64/libglfw3.a
 libraryNames:= -lgdi32 #-lopengl32
 gladBasePath:= ./Libs/glad
 gladCFile:= ${gladBasePath}/src/gl.c
-flags= -Wall 
+flags:= -Wall
+targetFinal:= ./Bin/compilatio.exe
+obj_folder:= ./Objects
+objects:= ${obj_folder}/main.o ${obj_folder}/gl.o
+#necesario por si agregamos version de linux
 targetPlatform:=windows
 ifeq ($(targetPlatform),windows)
 flags += -mwindows 
 endif
 
 #this builds in order, it will be improved later. Here is where the actual linking gets done
-build: gl.o main.o 
-	gcc -o compilatio.exe $^ ${includes} ${librariFiles} ${libraryNames} ${flags}
+build: ${objects}
+	gcc -o ${targetFinal} $^ ${includes} ${librariFiles} ${libraryNames} ${flags}
 #Whe must compile glad first
-gl.o: ${gladCFile}
-	gcc $< -o gl.o -c -I ${gladBasePath}/include ${flags}
+${obj_folder}/gl.o: ${gladCFile}
+	gcc $< -o $@ -c -I ${gladBasePath}/include ${flags}
 #Whe must compile this too. No necesary to link .o files so just the flags go there
-main.o: main.c
-	gcc -o main.o $< -c ${flags}
+${obj_folder}/main.o: main.c
+	gcc -o $@ $< -c ${includes} ${flags}

@@ -4,3 +4,5 @@ Bin/*
 Libs
 Libs/*
 *.o
+Objects
+Objects/*
